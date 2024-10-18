@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addTodo, toggleActivation } from '../Reducer/TodoSlice';
 import { Button, Checkbox, Input, List, Typography } from 'antd';
-import { RootState } from '../store'; // Correct import
+import { RootState } from '../Reducer/Store'; // Correct import
 import { Todo } from '../Reducer/TodoSlice'; // Add Todo interface if not exported yet
 
 const TodoUi: React.FC = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { List, Typography } from 'antd';
-import { RootState } from '../store'; // Correct import
+import { RootState } from '../Reducer/Store'; // Correct import
 import { Todo } from '../Reducer/TodoSlice'; // Import Todo type
 
 const ActivatedTodo: React.FC = () => {
