@@ -1,21 +1,22 @@
-import { RootState } from '@reduxjs/toolkit/query';
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addTodo, toggleActivation } from '../Reducer/TodoSlice';
 import { Button, Checkbox, Input, List, Typography } from 'antd';
+import { RootState } from '../store'; // Correct import
+import { Todo } from '../Reducer/TodoSlice'; // Add Todo interface if not exported yet
 
 const TodoUi: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>("");
 
-  const todos = useSelector((state: RootState) => state.todos.todos);
+  const todos = useSelector((state: RootState) => state.todos.todos) as Todo[]; // Cast todo type
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Add todo
   const AddNewTodo = useCallback((): void => {
     if (inputValue.trim() !== "") {
-      const newTodo = { id: Date.now(), text: inputValue, activated: false };
+      const newTodo: Todo = { id: Date.now(), text: inputValue, activated: false };
       dispatch(addTodo(newTodo));
       setInputValue(""); // Clear input
     }
@@ -41,11 +42,11 @@ const TodoUi: React.FC = () => {
         placeholder="Enter a task"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        onPressEnter={AddNewTodo} // Updated here
+        onPressEnter={AddNewTodo}
       />
       <Button
         type="primary"
-        onClick={AddNewTodo} // Updated here
+        onClick={AddNewTodo}
         style={{ marginTop: 10, width: "100%" }}
       >
         Add Task
@@ -55,11 +56,11 @@ const TodoUi: React.FC = () => {
         style={{ marginTop: 20 }}
         bordered
         dataSource={todos}
-        renderItem={(todo) => (
+        renderItem={(todo: Todo) => ( // Add type for todo
           <List.Item>
             <Checkbox
               checked={todo.activated}
-              onChange={() => toggleTodoActivation(todo.id)} // Updated here
+              onChange={() => toggleTodoActivation(todo.id)}
             >
               {todo.text}
             </Checkbox>
@@ -69,7 +70,7 @@ const TodoUi: React.FC = () => {
 
       <Button
         type="primary"
-        onClick={viewActivatedTodos} // Updated here
+        onClick={viewActivatedTodos}
         style={{ marginTop: 20, width: "100%" }}
       >
         View Activated Tasks
